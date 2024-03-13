@@ -15,13 +15,18 @@ class ExcelDataUploaderTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Queue::fake();
+    }
+
     /**
      * @test
      */
 
     public function canUploadExcelFiles()
     {
-        Queue::fake();
         Storage::fake('local');
         $file = UploadedFile::fake()->create('data.xlsx', 250000);
         $this->json('post', '/api/v1/excel-data-uploader',
@@ -38,5 +43,39 @@ class ExcelDataUploaderTest extends TestCase
         ]);
 
         Queue::assertPushed(ExcelDataUploadProcess::class);
+    }
+
+    /**
+     * @test
+     */
+
+    public function cannotUploadExcelFilesMoreThan250Mb()
+    {
+        Storage::fake('local');
+        $file = UploadedFile::fake()->create('data.xlsx', 300 * 1024);
+        $this->json('post', '/api/v1/excel-data-uploader',
+            [
+                'file' => $file
+            ])->assertStatus(422);
+
+        Storage::disk('local')
+            ->assertMissing("public/excel-data-uploads/{$file->hashName()}");
+    }
+
+    /**
+     * @test
+     */
+
+    public function cannotUploadExcelFilesShouldBeSpreadsheet()
+    {
+        Storage::fake('local');
+        $file = UploadedFile::fake()->create('data.docs', 200 * 1024);
+        $this->json('post', '/api/v1/excel-data-uploader',
+            [
+                'file' => $file
+            ])->assertStatus(422);
+
+        Storage::disk('local')
+            ->assertMissing("public/excel-data-uploads/{$file->hashName()}");
     }
 }
