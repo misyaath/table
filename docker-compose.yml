@@ -7,9 +7,9 @@ networks:
 
 volumes:
   mysql-data:
-    name: platform_mysql-data
+    name: excel_data_uploader_mysql-data
   redis-data:
-    name: platform_redis-data
+    name: excel_data_uploader_redis-data
 
 services:
 
