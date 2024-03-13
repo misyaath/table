@@ -19,7 +19,8 @@ services:
       dockerfile:
         ./docker/php/Dockerfile
       args:
-       INSTALL_PHP_XDEBUG: ${INSTALL_XDEBUG:-false}
+        INSTALL_PHP_XDEBUG: ${INSTALL_XDEBUG:-false}
+    image: excel-data-uploader-app
     volumes:
       - ./:/var/www:delegated
       - ./docker/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
@@ -34,10 +35,22 @@ services:
       - PHP_SESSION_SAVE_HANDLER=files
       - PHP_SESSION_SAVE_PATH=/tmp
       - PHP_SEND_MAIL_PATH=""
-    entrypoint: ["/usr/local/bin/custom-entrypoint.sh"]
-    command: ["php-fpm"]
+    entrypoint: [ "/usr/local/bin/custom-entrypoint.sh" ]
+    command: [ "php-fpm" ]
     depends_on:
       - mysql
+    networks:
+      - platform-network
+
+  worker:
+    image: excel-data-uploader-app
+    restart: always
+    working_dir: /var/www/
+    command: [ "php" "artisan" "queue:work"]
+    depends_on:
+      - php
+    volumes:
+      - ./:/var/www
     networks:
       - platform-network
 
