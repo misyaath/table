@@ -7,7 +7,6 @@ use Illuminate\Validation\Rules\File;
 
 class ExcelDataFileUploadRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
