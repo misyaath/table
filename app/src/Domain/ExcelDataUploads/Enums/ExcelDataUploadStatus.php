@@ -1,6 +1,6 @@
 <?php
 
-namespace App\src\Domain\Enums;
+namespace App\src\Domain\ExcelDataUploads\Enums;
 
 enum ExcelDataUploadStatus
 {

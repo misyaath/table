@@ -1,6 +1,6 @@
 <?php
 
-namespace App\src\Domain\Models;
+namespace App\src\Domain\ExcelDataUploads\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

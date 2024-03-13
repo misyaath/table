@@ -1,8 +1,8 @@
 <?php
 
-namespace App\src\Domain\Actions;
+namespace App\src\Domain\ExcelDataUploads\Actions;
 
-use App\src\Domain\Exceptions\ExcelDataFileStoreException;
+use App\src\Domain\ExcelDataUploads\Exceptions\ExcelDataFileStoreException;
 use Illuminate\Http\UploadedFile;
 
 class StoreExcelDataFile

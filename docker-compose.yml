@@ -46,7 +46,7 @@ services:
     image: excel-data-uploader-app
     restart: always
     working_dir: /var/www/
-    command: [ "php" "artisan" "queue:work"]
+    command: [ "php", "artisan", "queue:work"]
     depends_on:
       - php
     volumes:
