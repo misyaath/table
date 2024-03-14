@@ -1,0 +1,193 @@
+openapi: 3.0.3
+info:
+  title: Excel Data Uploader
+  description: Api endpoints detail in Excel Data Uploader
+  version: 1.0.0
+servers:
+  - url: 'http://localhost'
+    description: ''
+  - url: 'https://localhost/api/v1'
+paths:
+  /excel-data-uploader:
+    description: Upload Excel file for import sectors financial data
+    post:
+      description: Endpoint for upload excel files to import data
+      security:
+        - passport: [ '*' ]
+      responses:
+        200:
+          description: Operation success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/excelFilUploaderResponse'
+        400:
+          description: Operation failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusResponse400'
+        500:
+          description: Operation failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusResponse500'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/excelFilUploaderRequest'
+    get:
+      description: List Excel file uploaded lists
+      security:
+        - passport: [ '*' ]
+      responses:
+        200:
+          description: Operation success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/excelFilUploaderListResponse'
+        400:
+          description: Operation failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusResponse400'
+        500:
+          description: Operation failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusResponse500'
+  /sectors-financial-data:
+    get:
+      description: List Sectors financial Data list
+      security:
+        - passport: [ '*' ]
+      responses:
+        200:
+          description: Operation success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sectorFinancialDataListResponse'
+        400:
+          description: Operation failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusResponse400'
+        500:
+          description: Operation failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusResponse500'
+components:
+  securitySchemes:
+    passport:
+      type: oauth2
+      description: Laravel passport oauth2 security.
+      flows:
+        password:
+          tokenUrl: /oauth/token
+          refreshUrl: /token
+          scopes:
+            all: '*'
+  schemas:
+    excelFilUploaderRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+    excelFilUploaderResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        status:
+          type: string
+        message:
+          type: string
+    excelFilUploaderListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            uuid:
+              type: string
+            file_path:
+              type: string
+            status:
+              type: string
+            created_at:
+              type: string
+            updated_at:
+              type: string
+        status:
+          type: string
+        message:
+          type: string
+    sectorFinancialDataListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            uuid:
+              type: string
+            segment:
+              type: string
+            country:
+              type: string
+            product:
+              type: string
+            discount_band:
+              type: string
+            units_sold:
+              type: number
+            manufacturing_price:
+              type: number
+            gross_sales:
+              type: number
+            discounts:
+              type: number
+            sales:
+              type: number
+            cogs:
+              type: number
+            profit:
+              type: number
+            month_number:
+              type: number
+            month_name:
+              type: string
+            year:
+              type: number
+        status:
+          type: string
+        message:
+          type: string
+    statusResponse400:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    statusResponse500:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+
+
+
+
+
