@@ -60,6 +60,9 @@ RUN php -m && \
         zip && \
     php -m
 
+RUN apk add libpng-dev
+RUN docker-php-ext-install gd
+
 # ENABLE CURL
 RUN apk add --update curl-dev && \
     docker-php-ext-install curl && \

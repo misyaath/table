@@ -15,7 +15,7 @@ echo "Running startup.sh..."
 
 #composer install
 echo "Running composer install..."
-composer install --no-interaction --no-dev --prefer-dist
+composer install --ignore-platform-reqs --no-interaction --prefer-dist
 
 # Check if We need Git info file
 if [ -f "app-info.template" ]; then
