@@ -8,7 +8,7 @@ servers:
     description: ''
   - url: 'https://localhost/api/v1'
 paths:
-  /excel-data-uploader:
+  /upload:
     description: Upload Excel file for import sectors financial data
     post:
       description: Endpoint for upload excel files to import data

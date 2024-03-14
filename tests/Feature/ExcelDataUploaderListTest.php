@@ -20,7 +20,7 @@ class ExcelDataUploaderListTest extends TestCase
             'file_path' => $this->faker->filePath()
         ]);
 
-        $this->json('get', '/api/v1/excel-data-uploader')
+        $this->json('get', '/api/v1/upload')
             ->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [

@@ -29,7 +29,7 @@ class ExcelDataUploaderTest extends TestCase
     {
         Storage::fake('local');
         $file = UploadedFile::fake()->create('data.xlsx', 250000);
-        $this->json('post', '/api/v1/excel-data-uploader',
+        $this->json('post', '/api/v1/upload',
             [
                 'file' => $file
             ])->assertStatus(201);
@@ -53,7 +53,7 @@ class ExcelDataUploaderTest extends TestCase
     {
         Storage::fake('local');
         $file = UploadedFile::fake()->create('data.xlsx', 300 * 1024);
-        $this->json('post', '/api/v1/excel-data-uploader',
+        $this->json('post', '/api/v1/upload',
             [
                 'file' => $file
             ])->assertStatus(422);
@@ -70,7 +70,7 @@ class ExcelDataUploaderTest extends TestCase
     {
         Storage::fake('local');
         $file = UploadedFile::fake()->create('data.docs', 200 * 1024);
-        $this->json('post', '/api/v1/excel-data-uploader',
+        $this->json('post', '/api/v1/upload',
             [
                 'file' => $file
             ])->assertStatus(422);

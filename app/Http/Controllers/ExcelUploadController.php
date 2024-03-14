@@ -12,7 +12,7 @@ use App\src\Domain\Shared\SuccessHTTPResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
-class ExcelDataUploaderController extends Controller
+class ExcelUploadController extends Controller
 {
     public function index(
         ExcelDataFileUploadRequest         $request,

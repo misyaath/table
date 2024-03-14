@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ExcelDataUploaderController;
+use App\Http\Controllers\ExcelUploadController;
 use App\Http\Controllers\SectorFinancialDataController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function () {
-    Route::prefix('excel-data-uploader')->group(function () {
-        Route::post('/', [ExcelDataUploaderController::class, 'index']);
-        Route::get('/', [ExcelDataUploaderController::class, 'statuses']);
+    Route::prefix('upload')->group(function () {
+        Route::post('/', [ExcelUploadController::class, 'index']);
+        Route::get('/', [ExcelUploadController::class, 'statuses']);
     });
 
     Route::prefix('sectors-financial-data')->group(function () {
