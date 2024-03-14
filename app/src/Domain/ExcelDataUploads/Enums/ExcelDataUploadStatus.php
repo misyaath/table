@@ -2,11 +2,18 @@
 
 namespace App\src\Domain\ExcelDataUploads\Enums;
 
-enum ExcelDataUploadStatus
+use App\src\Domain\ExcelDataUploads\Models\ExcelDataUploaderStatus;
+use App\src\Domain\ExcelDataUploads\Statuses\ExcelProcessedStatus;
+use App\src\Domain\ExcelDataUploads\Statuses\ExcelProcessingStatus;
+use App\src\Domain\ExcelDataUploads\Statuses\ExcelTerminatedStatus;
+use App\src\Domain\ExcelDataUploads\Statuses\Interfaces\UpdatableStatus;
+
+enum ExcelDataUploadStatus: string
 {
-    case UPLOADED;
-    case PROCESSING;
-    case PROCESSED;
+    case UPLOADED = 'uploaded';
+    case PROCESSING = 'processing';
+    case PROCESSED = 'processed';
+    case TERMINATED = 'terminated';
 
     public function key(): string
     {
@@ -14,6 +21,7 @@ enum ExcelDataUploadStatus
             ExcelDataUploadStatus::UPLOADED => 'uploaded',
             ExcelDataUploadStatus::PROCESSED => 'processed',
             ExcelDataUploadStatus::PROCESSING => 'processing',
+            ExcelDataUploadStatus::TERMINATED => 'terminated',
         };
     }
 
@@ -23,6 +31,17 @@ enum ExcelDataUploadStatus
             ExcelDataUploadStatus::UPLOADED => 'Uploaded',
             ExcelDataUploadStatus::PROCESSED => 'Processed',
             ExcelDataUploadStatus::PROCESSING => 'Processing',
+            self::TERMINATED => "Terminated",
+        };
+    }
+
+    public function status(): UpdatableStatus
+    {
+        return match ($this) {
+            ExcelDataUploadStatus::UPLOADED => '',
+            ExcelDataUploadStatus::PROCESSED => new ExcelProcessedStatus(),
+            ExcelDataUploadStatus::PROCESSING => new ExcelProcessingStatus(),
+            self::TERMINATED => new ExcelTerminatedStatus(),
         };
     }
 }

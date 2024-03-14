@@ -2,6 +2,7 @@
 
 namespace App\src\Domain\ExcelDataUploads\Models;
 
+use App\src\Domain\ExcelDataUploads\Enums\ExcelDataUploadStatus;
 use Database\Factories\ExcelDataUploaderStatusFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,10 @@ class ExcelDataUploaderStatus extends Model
         'uuid',
         'file_path',
         'status'
+    ];
+
+    protected $casts = [
+        'status' => ExcelDataUploadStatus::class
     ];
 
     protected static function newFactory(): ExcelDataUploaderStatusFactory

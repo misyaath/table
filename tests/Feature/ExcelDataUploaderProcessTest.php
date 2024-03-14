@@ -1,13 +1,14 @@
 <?php
 
-namespace Feature;
+namespace Tests\Feature;
 
 use App\src\Domain\ExcelDataUploads\Actions\ImportExcelDataFromUploadedAction;
-use App\src\Domain\ExcelDataUploads\DataTransferObjects\ExcelDataDTO;
+use App\src\Domain\ExcelDataUploads\Actions\StoreExcelDataAction;
+use App\src\Domain\ExcelDataUploads\Enums\ExcelDataUploadStatus;
+use App\src\Domain\ExcelDataUploads\Jobs\ExcelDataUploadProcess;
 use App\src\Domain\ExcelDataUploads\Models\ExcelDataUploaderStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Tests\TestCase;
 
@@ -25,10 +26,17 @@ class ExcelDataUploaderProcessTest extends TestCase
             'file_path' => 'tests/Feature/Data/financial_sample.xlsx'
         ]);
 
-        Excel::import(new ImportExcelDataFromUploadedAction, $status->file_path);
-        $data = Excel::toArray(new ImportExcelDataFromUploadedAction, $status->file_path);
+        (new ExcelDataUploadProcess($status))->handle(new StoreExcelDataAction);
+        $data = Excel::toArray(
+            new ImportExcelDataFromUploadedAction, $status->file_path
+        );
         unset($data[0][0]);
 
+
+        $this->assertDatabaseHas('excel_data_uploader_status', [
+            'id' => $status->id,
+            'status' => ExcelDataUploadStatus::PROCESSED->key()
+        ]);
         $this->assertDatabaseCount('financial_data_by_sectors', count($data[0]));
 
     }
