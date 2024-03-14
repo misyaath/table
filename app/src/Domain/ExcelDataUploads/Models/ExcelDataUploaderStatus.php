@@ -24,7 +24,9 @@ class ExcelDataUploaderStatus extends Model
     ];
 
     protected $casts = [
-        'status' => ExcelDataUploadStatus::class
+        'status' => ExcelDataUploadStatus::class,
+        'created_at' => 'datetime:Y-m-d',
+        'updated_at' => 'datetime:Y-m-d',
     ];
 
     protected static function newFactory(): ExcelDataUploaderStatusFactory
