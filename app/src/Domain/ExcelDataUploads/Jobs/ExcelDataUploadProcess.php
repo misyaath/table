@@ -28,6 +28,7 @@ class ExcelDataUploadProcess implements ShouldQueue
             $storeExcelDataAction->execute($this->dataUploaderStatus);
             UpdateExcelUploadStatusAction::processed($this->dataUploaderStatus);
         } catch (\Exception $exception) {
+            echo $exception;
             UpdateExcelUploadStatusAction::terminated($this->dataUploaderStatus);
             Log::error('Error When Process excel file Error is: ' . $exception->getMessage());
         }

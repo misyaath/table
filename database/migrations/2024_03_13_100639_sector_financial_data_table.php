@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->decimal('units_sold');
             $table->float('manufacturing_price');
             $table->float('sale_price');
-            $table->double('gross_sale');
+            $table->double('gross_sales');
             $table->float('discounts');
             $table->double('sales');
             $table->double('cogs');

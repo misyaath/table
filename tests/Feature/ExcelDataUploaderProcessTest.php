@@ -26,12 +26,11 @@ class ExcelDataUploaderProcessTest extends TestCase
             'file_path' => 'tests/Feature/Data/financial_sample.xlsx'
         ]);
 
-        (new ExcelDataUploadProcess($status))->handle(new StoreExcelDataAction);
         $data = Excel::toArray(
             new ImportExcelDataFromUploadedAction, $status->file_path
         );
-        unset($data[0][0]);
 
+        (new ExcelDataUploadProcess($status))->handle(new StoreExcelDataAction);
 
         $this->assertDatabaseHas('excel_data_uploader_status', [
             'id' => $status->id,

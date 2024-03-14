@@ -16,7 +16,7 @@ class SectorFinancialData extends Model
         'units_sold',
         'manufacturing_price',
         'sale_price',
-        'gross_sale',
+        'gross_sales',
         'discounts',
         'sales',
         'cogs',
