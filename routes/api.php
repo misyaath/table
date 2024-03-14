@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function () {
-    Route::post('excel-data-uploader', [ExcelDataUploaderController::class, 'index']);
-    Route::get('excel-data-uploader-statuses', [ExcelDataUploaderController::class, 'statuses']);
+    Route::prefix('excel-data-uploader')->group(function () {
+        Route::post('/', [ExcelDataUploaderController::class, 'index']);
+        Route::get('/', [ExcelDataUploaderController::class, 'statuses']);
+    });
+
 });
