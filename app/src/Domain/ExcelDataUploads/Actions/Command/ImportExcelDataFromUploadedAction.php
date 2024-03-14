@@ -1,6 +1,6 @@
 <?php
 
-namespace App\src\Domain\ExcelDataUploads\Actions;
+namespace App\src\Domain\ExcelDataUploads\Actions\Command;
 
 use App\src\Domain\SectorFinancialData\Models\SectorFinancialData;
 use Illuminate\Support\Carbon;

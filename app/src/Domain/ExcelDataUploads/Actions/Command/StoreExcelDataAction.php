@@ -1,6 +1,6 @@
 <?php
 
-namespace App\src\Domain\ExcelDataUploads\Actions;
+namespace App\src\Domain\ExcelDataUploads\Actions\Command;
 
 use App\src\Domain\ExcelDataUploads\Models\ExcelDataUploaderStatus;
 use Maatwebsite\Excel\Facades\Excel;

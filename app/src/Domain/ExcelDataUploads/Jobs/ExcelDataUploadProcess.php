@@ -2,8 +2,8 @@
 
 namespace App\src\Domain\ExcelDataUploads\Jobs;
 
-use App\src\Domain\ExcelDataUploads\Actions\StoreExcelDataAction;
-use App\src\Domain\ExcelDataUploads\Actions\UpdateExcelUploadStatusAction;
+use App\src\Domain\ExcelDataUploads\Actions\Command\StoreExcelDataAction;
+use App\src\Domain\ExcelDataUploads\Actions\Command\UpdateExcelUploadStatusAction;
 use App\src\Domain\ExcelDataUploads\Models\ExcelDataUploaderStatus;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

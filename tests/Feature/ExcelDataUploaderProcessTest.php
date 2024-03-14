@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\src\Domain\ExcelDataUploads\Actions\ImportExcelDataFromUploadedAction;
-use App\src\Domain\ExcelDataUploads\Actions\StoreExcelDataAction;
+use App\src\Domain\ExcelDataUploads\Actions\Command\ImportExcelDataFromUploadedAction;
+use App\src\Domain\ExcelDataUploads\Actions\Command\StoreExcelDataAction;
 use App\src\Domain\ExcelDataUploads\Enums\ExcelDataUploadStatus;
 use App\src\Domain\ExcelDataUploads\Jobs\ExcelDataUploadProcess;
 use App\src\Domain\ExcelDataUploads\Models\ExcelDataUploaderStatus;
