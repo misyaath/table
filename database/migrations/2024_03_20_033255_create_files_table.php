@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->uuid('uuid');
             $table->string('name');
             $table->string('path');
+            $table->unsignedInteger('file_size');
             $table->timestamps();
         });
     }
