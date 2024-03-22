@@ -27,7 +27,45 @@ class CanCreateFileTest extends TestCase
         $this->assertDatabaseHas('files', [
             'name' => $file->getFilename(),
             'path' => 'uploads/' . $file->hashName(),
-            'file_size'=> $file->getSize()
+            'file_size' => $file->getSize()
+        ]);
+    }
+
+    /**
+     * @test
+     */
+
+    public function canUpdateOnlyExcelFileOnly()
+    {
+        Storage::fake('local');
+        $file = UploadedFile::fake()->create('test.pdf', 2 * 1024 * 1024);
+
+        $this->json('post', '/api/v1/files', [
+            'file' => $file,
+        ])->assertStatus(422)->
+        assertJsonStructure([
+            'errors' => [
+                'file'
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     */
+
+    public function canUpdateOnlyExcel2GBFileOnly()
+    {
+        Storage::fake('local');
+        $file = UploadedFile::fake()->create('test.pdf', 3 * 1024 * 1024);
+
+        $this->json('post', '/api/v1/files', [
+            'file' => $file,
+        ])->assertStatus(422)->
+        assertJsonStructure([
+            'errors' => [
+                'file'
+            ]
         ]);
     }
 }

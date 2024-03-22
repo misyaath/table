@@ -7,16 +7,16 @@ use App\src\Domain\Files\Actions\Command\StoreFileDetails;
 use App\src\Domain\Files\Actions\Command\UploadFile;
 use App\src\Domain\Files\DataTransferObjects\Commands\FilesStoreDTO;
 use App\src\Domain\Files\Exceptions\SpreadSheetUploadsException;
+use App\src\Domain\Files\Requests\FileStoreRequest;
 use App\src\Domain\Shared\ErrorHTTPResponse;
 use App\src\Domain\Shared\SuccessHTTPResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
 
     public function uploadFile(
-        Request          $request,
+        FileStoreRequest $request,
         UploadFile       $uploadFile,
         StoreFileDetails $storeFileDetails
     ): JsonResponse
