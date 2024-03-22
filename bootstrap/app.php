@@ -12,6 +12,7 @@
 */
 
 use App\src\Domain\Files\Providers\RouteServiceProvider;
+use \App\src\Domain\Tables\Providers\RouteServiceProvider as TableRouteServiceProvider;
 
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
@@ -27,6 +28,10 @@ $app = new Illuminate\Foundation\Application(
 | incoming requests to this application from both the web and CLI.
 |
 */
+
+$app->register(
+    TableRouteServiceProvider::class
+);
 
 $app->register(
     RouteServiceProvider::class
