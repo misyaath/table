@@ -18,7 +18,7 @@ class TableStoreRequest extends FormRequest
         return [
             'name' => 'required|string',
             'file' => 'required|uuid',
-//            'description'
+            'description' => 'nullable|string'
         ];
     }
 }
