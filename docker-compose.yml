@@ -46,7 +46,7 @@ services:
     image: excel-data-uploader-app
     restart: always
     working_dir: /var/www/
-    command: [ "php", "artisan", "queue:work"]
+    command: [ "php", "artisan", "queue:work" ]
     depends_on:
       - php
     volumes:
@@ -125,7 +125,34 @@ services:
     volumes:
       - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf:cached
       - redis-data:/data:delegated
-
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.2
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - platform-network
+  kafka:
+    image: confluentinc/cp-kafka:7.3.2
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9092,OUTSIDE://localhost:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "baeldung:1:1"
+    networks:
+      - platform-network
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kakfka-ui
+    ports:
+      - "8080:8080"
+    environment:
+      DYNAMIC_CONFIG_ENABLED: true
   mailhog:
     image: mailhog/mailhog:v1.0.1
     logging:

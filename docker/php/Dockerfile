@@ -62,6 +62,7 @@ RUN php -m && \
 
 RUN apk add libpng-dev
 RUN docker-php-ext-install gd
+RUN apk add librdkafka-dev
 
 # ENABLE CURL
 RUN apk add --update curl-dev && \
