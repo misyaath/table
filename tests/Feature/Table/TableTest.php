@@ -32,16 +32,40 @@ class TableTest extends TestCase
      * @test
      */
 
-    public function cannotCreateTableWithoutName()
+    public function cannotCreateTableWithoutRequiredFields()
+    {
+        $file = File::factory()->create();
+        $data = [
+            'name' => null,
+            'file' => null,
+        ];
+
+        $this->json('post', '/api/v1/tables', $data)
+            ->assertStatus(422)->assertJsonStructure([
+                'errors' => [
+                    'name',
+                    'file'
+                ]
+            ]);
+    }
+
+    /**
+     * @test
+     */
+
+    public function fileShouldBeUUID()
     {
         $file = File::factory()->create();
         $data = [
             'name' => $this->faker->word(),
-            'file' => $file->uuid,
-            'description' => $this->faker->sentence()
+            'file' => 'mnkjn434545',
         ];
-        $this->json('post', '/api/v1/tables', $data)->assertStatus(201);
 
-        $this->assertDatabaseHas('tables', $data);
+        $this->json('post', '/api/v1/tables', $data)
+            ->assertStatus(422)->assertJsonStructure([
+                'errors' => [
+                    'file'
+                ]
+            ]);
     }
 }

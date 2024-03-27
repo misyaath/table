@@ -9,7 +9,7 @@ class TableStoreRequest extends FormRequest
 
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
 
@@ -17,7 +17,7 @@ class TableStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-//            'file',
+            'file' => 'required|uuid',
 //            'description'
         ];
     }

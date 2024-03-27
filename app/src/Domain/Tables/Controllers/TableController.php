@@ -11,6 +11,7 @@ use App\src\Domain\Shared\ErrorHTTPResponse;
 use App\src\Domain\Shared\SuccessHTTPResponse;
 use App\src\Domain\Tables\Actions\Command\StoreTables;
 use App\src\Domain\Tables\DataTransferObjects\TableStoreDTO;
+use App\src\Domain\Tables\Requests\TableStoreRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class TableController extends Controller
 {
 
     public function store(
-        Request     $request,
+        TableStoreRequest     $request,
         StoreTables $tables
     ): JsonResponse
     {
