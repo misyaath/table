@@ -126,14 +126,16 @@ services:
       - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf:cached
       - redis-data:/data:delegated
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.3.2
+    image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
     ports:
       - "2181:2181"
     networks:
       - platform-network
   kafka:
-    image: confluentinc/cp-kafka:7.3.2
+    image: confluentinc/cp-kafka:latest
     container_name: kafka
     ports:
       - "9092:9092"
@@ -147,12 +149,18 @@ services:
     networks:
       - platform-network
   kafka-ui:
-    image: provectuslabs/kafka-ui
+    image: provectuslabs/kafka-ui:latest
     container_name: kakfka-ui
+    volumes:
+      - ./docker/kafka/kafka-ui/config.yml:/etc/kafkaui/dynamic_config.yaml
     ports:
       - "8080:8080"
     environment:
       DYNAMIC_CONFIG_ENABLED: true
+    depends_on:
+      - kafka
+    networks:
+      - platform-network
   mailhog:
     image: mailhog/mailhog:v1.0.1
     logging:
