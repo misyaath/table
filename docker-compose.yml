@@ -20,7 +20,7 @@ services:
         ./docker/php/Dockerfile
       args:
         INSTALL_PHP_XDEBUG: ${INSTALL_XDEBUG:-false}
-    image: excel-data-uploader-app
+    image: table
     volumes:
       - ./:/var/www:delegated
       - ./docker/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
