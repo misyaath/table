@@ -29,6 +29,7 @@ $app = new Illuminate\Foundation\Application(
 |
 */
 
+
 $app->register(
     TableRouteServiceProvider::class
 );
