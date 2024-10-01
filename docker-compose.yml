@@ -1,4 +1,4 @@
-version: '3.7'
+#version: '3.7'
 
 networks:
   platform-network:
@@ -10,6 +10,8 @@ volumes:
     name: excel_data_uploader_mysql-data
   redis-data:
     name: excel_data_uploader_redis-data
+  percona_data:
+    name: percona_data
 
 services:
 
@@ -100,6 +102,7 @@ services:
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:cached
       - ./docker/mysql/custom-entrypoint.sh:/usr/local/bin/custom-entrypoint.sh:cached
       - mysql-data:/var/lib/mysql:delegated
+      - mysql-data:/var/log/mysql
     entrypoint: [ "/usr/local/bin/custom-entrypoint.sh" ]
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -173,3 +176,12 @@ services:
       - "8025:8025"
     networks:
       - platform-network
+  percona:
+      image: percona/pmm-server:2
+      container_name: percona
+      depends_on:
+          - mysql
+      networks:
+          - platform-network
+      ports:
+          - 444:443
