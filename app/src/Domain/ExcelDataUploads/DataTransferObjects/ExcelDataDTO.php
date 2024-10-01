@@ -10,14 +10,14 @@ class ExcelDataDTO
     {
     }
 
-    public function data()
+    public function data(): Collection
     {
         return $this->transferToKeyValueObjects();
     }
 
-    protected function transferToKeyValueObjects()
+    protected function transferToKeyValueObjects(): Collection
     {
-        $this->collection->map(function ($array) {
+       return $this->collection->map(function ($array) {
             dd($array);
         });
     }
