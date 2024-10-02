@@ -2,26 +2,31 @@
 
 namespace Tests\Feature\CSV;
 
+use App\ElasticSearch\Config;
+use App\ElasticSearch\ElasticSearch;
+use App\src\Domain\CSV\Applications\CSVHeader;
 use App\src\Domain\CSV\Applications\CSVImporter;
+use App\src\Domain\CSV\DataTransferObjects\CsvDataDTO;
+use App\src\Domain\CSV\Enums\CSVDataProcessStatus;
 use App\src\Domain\CSV\Exceptions\UnableToReadCSVDataException;
+use App\src\Domain\CSV\Repositories\Command\SaveStoreCsvData;
 use App\src\Domain\Files\Models\File;
 use App\src\Domain\Tables\Models\Table;
+use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\ClientInterface;
+use Elastic\Elasticsearch\Exception\AuthenticationException;
+use Feature\CSV\Utils\GenerateCSV;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\MockObject\Exception;
 use Tests\TestCase;
 
 class CSVExtractionTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-
-    /**
-     * @test
-     * @throws UnableToReadCSVDataException
-     */
-
-    public function canExtractCSV()
+    protected function generateCSV(string $path): array
     {
         $headers = [
             'Series_reference',
@@ -40,7 +45,7 @@ class CSVExtractionTest extends TestCase
             'Series_title_5',
 
         ];
-        $path = storage_path(Str::uuid()->toString() . '.csv');
+
 
         $fp = fopen($path, 'w');
         fputcsv($fp, $headers);
@@ -70,6 +75,19 @@ class CSVExtractionTest extends TestCase
 
         fclose($fp);
 
+        return $csvData;
+    }
+
+    /**
+     * @test
+     * @throws UnableToReadCSVDataException
+     */
+
+    public function canExtractCSV()
+    {
+        $path = storage_path(Str::uuid()->toString() . '.csv');
+        $csvData = $this->generateCSV($path);
+
         $file = File::factory()->create([
             'path' => $path
         ]);
@@ -80,9 +98,41 @@ class CSVExtractionTest extends TestCase
             ]);
         });
 
-        $rows = (new CSVImporter($table))->csvRead()->getRows();
+        $rows = (new CSVImporter($table, new CSVHeader()))->csvRead()->getRows();
         foreach ($csvData as $key => $row) {
             $this->assertEquals(array_values($row), array_values($rows[$key]));
         }
+    }
+
+    /**
+     * @test
+     * @throws UnableToReadCSVDataException
+     * @throws AuthenticationException
+     * @throws Exception
+     */
+
+    public function canSaveCSV()
+    {
+        $path = storage_path(Str::uuid()->toString() . '.csv');
+        $this->generateCSV($path);
+
+        $file = File::factory()->create([
+            'path' => $path
+        ]);
+
+        $table = Table::withoutEvents(function () use ($file) {
+            return Table::factory()->create([
+                'name' => $this->faker->slug(1),
+                'file' => $file->id,
+            ]);
+        });
+
+
+        $rows = (new CSVImporter($table, new CSVHeader()))->csvRead()->getRows();
+        $response = (new SaveStoreCsvData((new ElasticSearch(new Config()))->client()))
+            ->execute(new CsvDataDTO($rows, $table));
+
+        $this->assertTrue($response);
+
     }
 }

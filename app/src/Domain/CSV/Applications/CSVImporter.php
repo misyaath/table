@@ -9,9 +9,9 @@ class CSVImporter
 {
     protected $stream;
     protected array $header;
-    protected array $rows;
+    protected array $rows = [];
 
-    public function __construct(protected Table $table)
+    public function __construct(protected Table $table, protected CSVHeader $csvHeader)
     {
         $this->stream = fopen($this->table->tableFile->path, "r");
     }
@@ -45,10 +45,10 @@ class CSVImporter
         return $this;
     }
 
-    public function setupData(int $row, bool|array $data): void
+    public function setupData(int $row, array $data): void
     {
         if (0 == $row) {
-            $this->header = $data;
+            $this->header = $this->csvHeader->set($data)->indexes();
         } else {
             $this->rows[] = array_combine($this->header, $data);
         }

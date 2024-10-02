@@ -91,6 +91,7 @@ services:
                 INSTALL_PHP_XDEBUG: ${INSTALL_XDEBUG:-false}
         image: table
         volumes:
+            - certs:/usr/share/es/config/certs
             - ./:/var/www:delegated
             - ./docker/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
             - ./docker/php/php/custom.ini.template:/usr/local/etc/php/conf.d/custom.ini.template
@@ -294,6 +295,8 @@ services:
             interval: 10s
             timeout: 10s
             retries: 120
+        networks:
+            - platform-network
     kibana:
         depends_on:
             es01:
@@ -320,3 +323,5 @@ services:
             interval: 10s
             timeout: 10s
             retries: 120
+        networks:
+            - platform-network
