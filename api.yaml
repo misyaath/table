@@ -38,53 +38,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/excelFilUploaderRequest'
-    get:
-      description: List Excel file uploaded lists
-      security:
-        - passport: [ '*' ]
-      responses:
-        200:
-          description: Operation success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/excelFilUploaderListResponse'
-        400:
-          description: Operation failure
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/statusResponse400'
-        500:
-          description: Operation failure
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/statusResponse500'
-  /sectors-financial-data:
-    get:
-      description: List Sectors financial Data list
-      security:
-        - passport: [ '*' ]
-      responses:
-        200:
-          description: Operation success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/sectorFinancialDataListResponse'
-        400:
-          description: Operation failure
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/statusResponse400'
-        500:
-          description: Operation failure
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/statusResponse500'
 components:
   securitySchemes:
     passport:
