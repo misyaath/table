@@ -58,5 +58,3 @@ php artisan test
 ```
 
 Worker automatically run queue when up docker
-
-I have added open api docs for api documentation 
