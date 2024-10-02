@@ -1,6 +1,6 @@
 <?php
 
-namespace App\src\Domain\Tables\Actions\Command;
+namespace App\src\Domain\Tables\Repositories\Command;
 
 use App\src\Domain\Tables\DataTransferObjects\TableStoreDTO;
 use App\src\Domain\Tables\Exceptions\TableStoreException;

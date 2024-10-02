@@ -3,7 +3,7 @@
 namespace App\src\Domain\CSV\Repositories\Command;
 
 use App\src\Domain\CSV\DataTransferObjects\CsvDataDTO;
-use App\src\Domain\ExcelDataUploads\Exceptions\CSVDataFileStoreException;
+use App\src\Domain\CSV\Exceptions\CSVDataFileStoreException;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
