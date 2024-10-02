@@ -10,6 +10,11 @@
 
 ## Project Setup
 
+Check .env.example to all enviroment varieable for applications
+```sh
+.env.example
+```
+
 ```sh
 docker compose up -d
 ```
