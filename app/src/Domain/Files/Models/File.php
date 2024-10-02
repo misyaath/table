@@ -2,7 +2,8 @@
 
 namespace App\src\Domain\Files\Models;
 
-use App\src\Domain\Files\database\factories\FileFactory;
+
+use Database\Factories\FileFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
