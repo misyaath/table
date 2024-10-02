@@ -3,7 +3,7 @@
 namespace App\src\Domain\ExcelDataUploads\Actions\Command;
 
 use App\src\Domain\ExcelDataUploads\Enums\ExcelDataUploadStatus;
-use App\src\Domain\ExcelDataUploads\Exceptions\ExcelDataFileSaveStatusException;
+use App\src\Domain\ExcelDataUploads\Exceptions\UnableToReadCSVDataException;
 use App\src\Domain\ExcelDataUploads\Jobs\ExcelDataUploadProcess;
 use App\src\Domain\ExcelDataUploads\Models\ExcelDataUploaderStatus;
 use Illuminate\Support\Str;
@@ -18,7 +18,7 @@ class SaveStoreExcelDataFileStatusAction
             'status' => ExcelDataUploadStatus::UPLOADED->key()
         ]);
         if (!$status) {
-            throw new ExcelDataFileSaveStatusException(500, "Unable to Save uploaded file status");
+            throw new UnableToReadCSVDataException(500, "Unable to Save uploaded file status");
         }
         //@TODO It should go to observer
         dispatch(new ExcelDataUploadProcess($status));

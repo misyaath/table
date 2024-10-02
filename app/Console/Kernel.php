@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
     protected function commands(): void
     {
         $this->load(__DIR__ . '/Commands');
-        $this->load(base_path('app/src/Domain/ExcelDataUploads/Console/Commands'));
+        $this->load(base_path('app/src/Domain/CSV/Console/Commands'));
 
         require base_path('routes/console.php');
     }
