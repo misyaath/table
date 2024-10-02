@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-alpine as php-base
+FROM php:8.3-fpm-alpine as php-base
 
 LABEL Description="ExcelDataUploader base PHP image fork of php:8.1-fpm"
 LABEL Vendor="ExcelDataUploader"
@@ -62,6 +62,24 @@ RUN php -m && \
 
 RUN apk add libpng-dev
 RUN docker-php-ext-install gd
+
+RUN apk add --no-cache python3 g++ make
+
+ARG LIBRDKAFKA_GIT_SHA1=267367c9475c2154e72eafe6ff1957518cb2ed1a
+RUN apk add --update --no-cache alpine-sdk bash python3 autoconf && \
+  git clone -o ${LIBRDKAFKA_GIT_SHA1} https://github.com/edenhill/librdkafka.git /tmp/librdkafka && \
+  cd /tmp/librdkafka/ && \
+  ./configure && \
+  make && \
+  make install
+
+# php-rdkafka should be compiled using the same php module as result we are passing
+# --with-php-config /usr/local/bin/php-config
+ARG PHPCONF_PATH=/usr/local/etc/php/conf.d
+ARG RDKAFKA_PHP_GIT_SHA1=abd6b6add8e0b983c27245a59981a9a4b5389139
+RUN apk add --update --no-cache pcre-dev && \
+  pecl install rdkafka && \
+  echo "extension=rdkafka.so" > ${PHPCONF_PATH}/rdkafka.ini
 
 # ENABLE CURL
 RUN apk add --update curl-dev && \

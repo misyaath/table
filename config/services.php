@@ -30,5 +30,12 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'elasticsearch' => [
+        'host' => env('ELASTIC_HOST', 'localhost'),
+        'port' => env('ELASTIC_PORT', 9200),
+        'user' => env('ELASTIC_USER', ''),
+        'password' => env('ELASTIC_PASSWORD', ''),
+        'cert' => env('ELASTIC_CERT', '/usr/share/es/config/certs/ca/ca.crt'),
+    ]
 
 ];

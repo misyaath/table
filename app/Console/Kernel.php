@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\src\Domain\ExcelDataUploads\Console\Commands\PublishExampleKafkaTopic;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -20,7 +21,8 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
+        $this->load(base_path('app/src/Domain/CSV/Console/Commands'));
 
         require base_path('routes/console.php');
     }

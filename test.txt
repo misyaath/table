@@ -1,0 +1,10 @@
+male
+female
+
+
+colombo 1-15
+
+{
+ 'name': 'misyaath',
+ 'address': 'course'
+}

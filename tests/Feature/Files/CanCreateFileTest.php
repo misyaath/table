@@ -2,15 +2,15 @@
 
 namespace Tests\Feature\Files;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\RefreshDatabase;
 use Tests\TestCase;
 
 class CanCreateFileTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker, RefreshDatabase;
 
     /**
      * @test
@@ -22,11 +22,50 @@ class CanCreateFileTest extends TestCase
         $file = UploadedFile::fake()->create('test.xlsx', 2 * 1024 * 1024);
         $this->json('post', '/api/v1/files', [
             'file' => $file,
-        ]);
+        ])->assertStatus(201);
 
         $this->assertDatabaseHas('files', [
-            'name' => 'test.xlsx',
-            'path' => '/private/files/' . $file->hashName()
+            'name' => $file->getFilename(),
+            'path' => 'uploads/' . $file->hashName(),
+            'file_size' => $file->getSize()
+        ]);
+    }
+
+    /**
+     * @test
+     */
+
+    public function canUpdateOnlyExcelFileOnly()
+    {
+        Storage::fake('local');
+        $file = UploadedFile::fake()->create('test.pdf', 2 * 1024 * 1024);
+
+        $this->json('post', '/api/v1/files', [
+            'file' => $file,
+        ])->assertStatus(422)->
+        assertJsonStructure([
+            'errors' => [
+                'file'
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     */
+
+    public function canUpdateOnlyExcel2GBFileOnly()
+    {
+        Storage::fake('local');
+        $file = UploadedFile::fake()->create('test.pdf', 3 * 1024 * 1024);
+
+        $this->json('post', '/api/v1/files', [
+            'file' => $file,
+        ])->assertStatus(422)->
+        assertJsonStructure([
+            'errors' => [
+                'file'
+            ]
         ]);
     }
 }
