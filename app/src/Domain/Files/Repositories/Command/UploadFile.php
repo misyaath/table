@@ -1,6 +1,6 @@
 <?php
 
-namespace App\src\Domain\Files\Actions\Command;
+namespace App\src\Domain\Files\Repositories\Command;
 
 use App\src\Domain\Files\Exceptions\SpreadSheetUploadsException;
 use Illuminate\Http\UploadedFile;
