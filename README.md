@@ -7,6 +7,14 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Versions 
+
+#laravel 10.10</br>
+#php 8.3</br>
+#mysql 8.0.30</br>
+#nginx 1.23.1</br>
+#redis 6.0</br>
+
 
 ## Project Setup
 
@@ -16,12 +24,14 @@ Check .env.example to all enviroment varieable for applications
 ```
 
 ```sh
+docker compose build
 docker compose up -d
 ```
 
 If there any permission issue please run with sudo privilege 
 
 ```sh
+sudo docker compose build
 sudo docker compose up -d
 ```
 
