@@ -8,13 +8,15 @@
 </p>
 
 ## Versions 
+![alt text](https://badgen.net/badge/Laravel/10.10/red)
 
-#laravel 10.10</br>
-#php 8.3</br>
-#mysql 8.0.30</br>
-#nginx 1.23.1</br>
-#redis 6.0</br>
+![alt text](https://badgen.net/badge/PHP/8.3/blue)
 
+![alt text](https://badgen.net/badge/MySql/8.0.30/red)
+
+![alt text](https://badgen.net/badge/Nginx/1.23.1/red)
+
+![alt text](https://badgen.net/badge/Redis/6.0/red)
 
 ## Project Setup
 
