@@ -1,7 +1,7 @@
-FROM mysql:8.0.30
+FROM mysql:8.1.0
 
-LABEL Description="ExcelDataUploader Mysql image fork of mysql:8.0.30"
-LABEL Vendor="ExcelDataUploader"
+LABEL Description="table Mysql image fork of mysql:8.0.30"
+LABEL Vendor="table"
 LABEL Version=1.0
 
 # --------- Log Directory

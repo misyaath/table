@@ -6,10 +6,10 @@ networks:
         name: platform-network
 
 volumes:
-    mysql-data:
-        name: excel_data_uploader_mysql-data
+    mysql_data:
+        name: table_mysql-data
     redis-data:
-        name: excel_data_uploader_redis-data
+        name: table_redis-data
     percona_data:
         name: percona_data
     certs:
@@ -113,7 +113,7 @@ services:
             - platform-network
 
     worker:
-        image: excel-data-uploader-app
+        image: table
         restart: always
         working_dir: /var/www/
         command: [ "php", "artisan", "queue:work" ]
@@ -169,8 +169,8 @@ services:
         volumes:
             - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:cached
             - ./docker/mysql/custom-entrypoint.sh:/usr/local/bin/custom-entrypoint.sh:cached
-            - mysql-data:/var/lib/mysql:delegated
-            - mysql-data:/var/log/mysql
+            - ./mysql/data:/var/lib/mysql:delegated
+            - ./mysql/data:/var/log/mysql
         entrypoint: [ "/usr/local/bin/custom-entrypoint.sh" ]
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
