@@ -1,7 +1,7 @@
 FROM php:8.3-fpm-alpine as php-base
 
-LABEL Description="ExcelDataUploader base PHP image fork of php:8.1-fpm"
-LABEL Vendor="ExcelDataUploader"
+LABEL Description="table base PHP image fork of php:8.3-fpm"
+LABEL Vendor="table"
 LABEL Version=1.0
 
 # --------- Install dependancies

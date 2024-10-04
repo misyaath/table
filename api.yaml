@@ -1,17 +1,17 @@
 openapi: 3.0.3
 info:
-  title: Excel Data Uploader
-  description: Api endpoints detail in Excel Data Uploader
+  title: Table
+  description: Api endpoints detail in Table
   version: 1.0.0
 servers:
   - url: 'http://localhost'
     description: ''
   - url: 'https://localhost/api/v1'
 paths:
-  /upload:
-    description: Upload Excel file for import sectors financial data
+  /files:
+    description: Upload csv file for import for add table
     post:
-      description: Endpoint for upload excel files to import data
+      description: Endpoint for upload csv files to import data
       security:
         - passport: [ '*' ]
       responses:
@@ -20,7 +20,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/excelFilUploaderResponse'
+                $ref: '#/components/schemas/csvFilUploaderListResponse'
         400:
           description: Operation failure
           content:
@@ -37,7 +37,37 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/excelFilUploaderRequest'
+              $ref: '#/components/schemas/csvFilUploaderRequest'
+  /tables:
+    description: Add table
+    post:
+      description: Endpoint for add new table to analyze , sor, filter and view data
+      security:
+        - passport: [ '*' ]
+      responses:
+        200:
+          description: Operation success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generalResponse'
+        400:
+          description: Operation failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusResponse400'
+        500:
+          description: Operation failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusResponse500'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tableCreateRequest'
 components:
   securitySchemes:
     passport:
@@ -50,13 +80,13 @@ components:
           scopes:
             all: '*'
   schemas:
-    excelFilUploaderRequest:
+    csvFilUploaderRequest:
       type: object
       properties:
         file:
           type: string
           format: binary
-    excelFilUploaderResponse:
+    csvFilUploaderResponse:
       type: object
       properties:
         data:
@@ -65,7 +95,7 @@ components:
           type: string
         message:
           type: string
-    excelFilUploaderListResponse:
+    csvFilUploaderListResponse:
       type: object
       properties:
         data:
@@ -85,46 +115,18 @@ components:
           type: string
         message:
           type: string
-    sectorFinancialDataListResponse:
+    tableCreateRequest:
       type: object
       properties:
-        data:
-          type: object
-          properties:
-            uuid:
-              type: string
-            segment:
-              type: string
-            country:
-              type: string
-            product:
-              type: string
-            discount_band:
-              type: string
-            units_sold:
-              type: number
-            manufacturing_price:
-              type: number
-            gross_sales:
-              type: number
-            discounts:
-              type: number
-            sales:
-              type: number
-            cogs:
-              type: number
-            profit:
-              type: number
-            month_number:
-              type: number
-            month_name:
-              type: string
-            year:
-              type: number
-        status:
+        file:
+          type: number
+          description: uploaded file id to save files data with table
+        name:
           type: string
-        message:
+          description: it should be unique name to represent table name
+        description:
           type: string
+          description: its small description about table
     statusResponse400:
       type: object
       properties:
@@ -133,6 +135,13 @@ components:
         message:
           type: string
     statusResponse500:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    generalResponse:
       type: object
       properties:
         status:

@@ -1,7 +1,7 @@
 FROM nginx:1.23.1-alpine
 
-LABEL Description="ExcelDataUploader Nginx image fork of nginx:1.23.1-alpine"
-LABEL Vendor="ExcelDataUploader"
+LABEL Description="table Nginx image fork of nginx:1.23.1-alpine"
+LABEL Vendor="table"
 LABEL Version=1.0
 
 ARG EXCEL_DATA_UPLOADER_WORK_DIR=/var/www
