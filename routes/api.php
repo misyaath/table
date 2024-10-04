@@ -14,15 +14,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::prefix('v1')->group(function () {
-    Route::prefix('upload')->group(function () {
-        Route::post('/', [ExcelUploadController::class, 'index']);
-        Route::get('/', [ExcelUploadController::class, 'statuses']);
-    });
-
-    Route::prefix('sectors-financial-data')->group(function () {
-        Route::get('/', [SectorFinancialDataController::class, 'index']);
-    });
-
-});
