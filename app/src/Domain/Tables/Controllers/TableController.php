@@ -26,7 +26,8 @@ class TableController extends Controller
             ));
 
         } catch (\Exception $exception) {
-            return (new ErrorHTTPResponse($exception, 'unable to save table please try again'))->response();
+            return (new ErrorHTTPResponse($exception,
+                'unable to save table please try again'))->response();
         }
 
         return (new SuccessHTTPResponse([],
