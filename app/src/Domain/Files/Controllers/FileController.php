@@ -22,14 +22,14 @@ class FileController extends Controller
     {
         try {
             $file = $request->file('file');
-            $storeFileDetails->execute(
-                new FilesStoreDTO($uploadFile->execute($file), $request->file('file'))
-            );
+            $dto = new FilesStoreDTO($uploadFile->execute($file), $request->file('file'));
+            $storeFileDetails->execute($dto);
         } catch (\Exception $exception) {
-            return (new ErrorHTTPResponse($exception))->response();
+            return (new ErrorHTTPResponse($exception,
+                'unable to save files please try again'))->response();
         }
 
-        return (new SuccessHTTPResponse([],
+        return (new SuccessHTTPResponse(['uuid' => $dto->uuid],
             201, 'file uploaded successfully '))->response();
     }
 }
