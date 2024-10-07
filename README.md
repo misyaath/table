@@ -44,8 +44,20 @@ php artisan test
 
 ```
 
-Worker automatically run queue when up docker
+**Worker automatically run queue when up docker**
 
-All codes are in /src/domain and check api endpoints in api.yaml file for api documentation 
+All codes are in `/src/domain` and check api endpoints in `api.yaml` file for api documentation 
 
+## Code Structure
+
++ Applications : All of the business logic Like Agregates/ Agregate root
++ DataTransferObjects: Its DTO for data and maintain the data intergratiy 
++ Repository: Repository will have database code with command and query of the domain  
++ Models or Entities
++ Value objects: All of the domain values 
++ Observer and Events of the Domain 
++ Service Layers like Http Request and other 
++ And also will consists Factories also to create complex objects
+
+  
 Thanks 
