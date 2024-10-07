@@ -47,6 +47,7 @@ php artisan test
 **Worker automatically run queue when up docker**
 
 All codes are in `/src/domain` and check api endpoints in `api.yaml` file for api documentation 
+Or Api documentation with swagger UI `https://localhost/api-doc/`
 
 ## Code Structure
 
