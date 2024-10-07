@@ -19,7 +19,7 @@ class FileStoreRequest extends FormRequest
         return [
             'file' => [
                 'required',
-                File::types('xlsx')
+                File::types('csv')
                     ->max(2 * 1024 *1024)
             ]
         ];

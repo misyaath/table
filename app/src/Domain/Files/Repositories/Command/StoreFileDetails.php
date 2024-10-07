@@ -16,7 +16,7 @@ class StoreFileDetails
     {
         if (!File::create([
             'name' => $DTO->name,
-            'uuid' => Str::uuid()->toString(),
+            'uuid' => $DTO->uuid,
             'path' => $DTO->path,
             'file_size' => $DTO->fileSize
         ])) {

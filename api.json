@@ -1,0 +1,251 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Table",
+        "description": "Api endpoints detail in Table",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://localhost/api/v1"
+        }
+    ],
+    "paths": {
+        "/files": {
+            "description": "Upload csv file for import for add table",
+            "post": {
+                "description": "Endpoint for upload csv files to import data",
+                "security": [
+                    {
+                        "passport": [
+                            "*"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Operation success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/csvFilUploaderResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Operation failure",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/statusResponse400"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Operation failure",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/statusResponse500"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/csvFilUploaderRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tables": {
+            "description": "Add table",
+            "post": {
+                "description": "Endpoint for add new table to analyze , sor, filter and view data",
+                "security": [
+                    {
+                        "passport": [
+                            "*"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Operation success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/generalResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Operation failure",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/statusResponse400"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Operation failure",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/statusResponse500"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/tableCreateRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "flows": {
+                    "password": {
+                        "tokenUrl": "/oauth/token",
+                        "refreshUrl": "/token",
+                        "scopes": {
+                            "all": "*"
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "csvFilUploaderRequest": {
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "csvFilUploaderResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "uuid": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "csvFilUploaderListResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "uuid": {
+                                "type": "string"
+                            },
+                            "file_path": {
+                                "type": "string"
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "tableCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "type": "number",
+                        "description": "uploaded file id to save files data with table"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "it should be unique name to represent table name"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "its small description about table"
+                    }
+                }
+            },
+            "statusResponse400": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "statusResponse500": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "generalResponse": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
